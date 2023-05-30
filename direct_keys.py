@@ -14,8 +14,9 @@ D = 0x20
 PUL = ctypes.POINTER(ctypes.c_ulong)
 
 class KeyBdInput(ctypes.Structure):
+    _fields_ = [
                 # wVk represents a virtual-key code
-    _fields_ = [("wVk", ctypes.c_ushort),
+                ("wVk", ctypes.c_ushort),
                 # wScan represents a hardware scan code
                 ("wScan", ctypes.c_ushort),
                 # dwFlags specifies various aspects of function operation
@@ -23,11 +24,13 @@ class KeyBdInput(ctypes.Structure):
                 # time specifies the time stamp for the event, in milliseconds
                 ("time", ctypes.c_ulong),
                 # dwExtraInfo specifies extra information associated with the message
-                ("dwExtraInfo", PUL)]
+                ("dwExtraInfo", PUL)
+                ]
 
 class HardwareInput(ctypes.Structure):
+    _fields_ = [
                 # uMsg specifies the message type
-    _fields_ = [("uMsg", ctypes.c_ulong),
+                ("uMsg", ctypes.c_ulong),
                 # wParamL specifies the low-order word of the wParam argument
                 ("wParamL", ctypes.c_short),
                 # wParamH specifies the high-order word of the wParam argument
@@ -35,8 +38,9 @@ class HardwareInput(ctypes.Structure):
                 ]
 
 class MouseInput(ctypes.Structure):
+    _fields_ = [
                 # dx specifies the mouse's absolute position along the x-axis or its amount of motion since the last mouse event was generated
-    _fields_ = [("dx", ctypes.c_long),
+                ("dx", ctypes.c_long),
                 # dy specifies the mouse's absolute position along the y-axis or its amount of motion since the last mouse event was generated
                 ("dy", ctypes.c_long),
                 # mouseData specifies the mouse wheel's distance rotated, expressed in multiples or divisions of WHEEL_DELTA
@@ -50,21 +54,23 @@ class MouseInput(ctypes.Structure):
                 ]
 
 class Input_I(ctypes.Union):
-                # the union of the three structures    
-    _fields_ = [("ki", KeyBdInput),
+    # the union of the three structures  
+    _fields_ = [
+                ("ki", KeyBdInput),
                 ("mi", MouseInput),
                 ("hi", HardwareInput)
                 ]
 
 class Input(ctypes.Structure):
+    _fields_ = [
                 # type specifies the type of the input event
-    _fields_ = [("type", ctypes.c_ulong),
+                ("type", ctypes.c_ulong),
                 # the union of the three structures
                 ("ii", Input_I)
                 ]
 
 # function to press key, hexKeyCode is the scan code of the key
-def PressKey(hexKeyCode):
+def press_key(hexKeyCode):
     # extra is a variable of type unsigned long equal to 0
     extra = ctypes.c_ulong(0)
     # ii_ is an instance of Input_I
@@ -77,7 +83,7 @@ def PressKey(hexKeyCode):
     ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
 
 # function to release key
-def ReleaseKey(hexKeyCode):
+def release_key(hexKeyCode):
     # extra is a variable of type unsigned long equal to 0
     extra = ctypes.c_ulong(0)
     # ii_ is an instance of Input_I
@@ -91,7 +97,7 @@ def ReleaseKey(hexKeyCode):
 
 if __name__ == '__main__':
     while(True):
-        PressKey(0x11)
+        press_key(0x11)
         time.sleep(1)
-        ReleaseKey(0x11)
+        release_key(0x11)
         time.sleep(1)
