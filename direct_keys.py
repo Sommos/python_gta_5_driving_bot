@@ -97,7 +97,7 @@ def release_key(hexKeyCode):
 
 if __name__ == '__main__':
     while(True):
-        press_key(0x11)
+        press_key(W)
         time.sleep(1)
-        release_key(0x11)
+        release_key(W)
         time.sleep(1)
