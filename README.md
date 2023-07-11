@@ -1,6 +1,8 @@
 # Python GTA 5 Driving Bot
 
-![Preview](/gif0.gif)
+<p align="center">
+    <img src="gif0.gif" alt="animated" />
+</p>
 
 This program is to test the OpenCV Python library, with a simple bot that can automatically drive in GTA 5.
 
